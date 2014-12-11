@@ -1,0 +1,2 @@
+wiw-series-manager
+==================
