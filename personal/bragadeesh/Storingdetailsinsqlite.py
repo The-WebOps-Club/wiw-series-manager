@@ -3,13 +3,12 @@ from imdbpie import Imdb
 import sqlite3
 import re
 api = '43h3hy2a4r6cuf3h3d4tzkqy'
-print("Enter movie name:")
-movie = 'Interstellar'
+movie = raw_input("Enter movie name:")
 movie_details=RT(api).search(movie)
 
 conn = sqlite3.connect('Seriesmanagerdatabase.db')
 c = conn.cursor()
-c.execute('''CREATE TABLE Rottentomatoes_movie(name text,year int,mpaa_rating text,release_date text,synopsis text,audience_score real,critics_score real)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Rottentomatoes_movie(name text,year int,mpaa_rating text,release_date text,synopsis text,audience_score real,critics_score real)''')
 
 text = '"title":"(.+?)"'
 pattern = re.compile(text)
@@ -42,10 +41,10 @@ for row in c.execute('SELECT * FROM Rottentomatoes_movie ORDER audience_score'):
     print row
 conn.close()
 
-from imdbpie import Imdb
+
 imdb = Imdb()
 imdb.find_by_title(movie)
-c.execute('''CREATE TABLE imdb_movie(name text,year int,mpaa_rating text,release_date text,genre text,runtime text,plot text,language text,director text,writer text,actors text,metascore real,imdb_rating real,imdb_votes int)''')
+c.execute('''CREATE TABLE IF NOT EXISTS imdb_movie(name text,year int,mpaa_rating text,release_date text,genre text,runtime text,plot text,language text,director text,writer text,actors text,metascore real,imdb_rating real,imdb_votes int)''')
 
 text = '"Title":"(.+?)"'
 pattern = re.compile(text)
