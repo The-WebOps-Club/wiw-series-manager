@@ -14,7 +14,6 @@ class IMDB(Main.Datafetch):
 
     def __init__(self,movie_name):
         self.movie = movie_name
-        self.movie_details=RT(api).search(self.movie)
     def display_name(self):
         print "Movie"
         return details(self.movie,'Title')
@@ -48,7 +47,7 @@ movie1 = IMDB(movie)
 conn = sqlite3.connect('Seriesmanagerdatabase.db')
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS IMDB_movie(movie text,description text,year int,rating real,actors text,writer text,director text,plot text,language text)''')
-c.execute("INSERT INTO IMDB_movie VALUES(display_name(movie1),display_description(movie1),display_year(movie1),display_rating(movie1),display_actors(movie1),display_writer(movie1),display_director(movie1),display_plot(movie1),display_language(movie1))")
+c.execute("INSERT INTO IMDB_movie VALUES (movie1.display_name(movie1),movie1.display_description(movie1),movie1.display_year(movie1),movie1.display_rating(movie1),movie1.display_actors(movie1),movie1.display_writer(movie1),movie1.display_director(movie1),movie1.display_plot(movie1),movie1.display_language(movie1))")
 conn.commit()
 print "Details from IMDB:\n"
 for row in c.execute('SELECT * FROM IMDB_movie ORDER rating'):

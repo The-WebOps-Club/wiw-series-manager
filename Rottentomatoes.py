@@ -10,7 +10,7 @@ def details(movie,detailinfo):
     detail = json_data[detailinfo]
     print detail
 
-class Rottentomatoes(Main.Datafetcher):
+class Rottentomatoes(Main.Datafetch):
 
     def __init__(self,movie_name):
         self.movie = movie_name
@@ -33,7 +33,7 @@ movie1 = Rottentomatoes(movie)
 conn = sqlite3.connect('Seriesmanagerdatabase.db')
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS Rottentomatoes_movie(name text,description text,year int,rating real)''')
-c.execute("INSERT INTO Rottentomatoes_movie VALUES(display_name(movie1),display_description(movie1),display_year(movie1),display_rating(movie1)")
+c.execute("INSERT INTO Rottentomatoes_movie VALUES(movie1.display_name(movie1),movie1.display_description(movie1),movie1.display_year(movie1),movie1.display_rating(movie1))")
 conn.commit()
 print "Details from Rottentomatoes:\n"
 for row in c.execute('SELECT * FROM Rottentomatoes_movie ORDER rating'):
